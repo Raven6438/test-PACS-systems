@@ -9,9 +9,6 @@
 </head>
 <body>
     <h2>Список исследований пациентов</h2>
-    <div>
-        count: {{ studies.count }}
-    </div>
     <ul class="pagination">
         {% if page_obj.has_previous %}
             <li class="page-item"><a class="page-link" href="?page=1">&laquo; Первая</a></li>
@@ -25,6 +22,10 @@
             <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Последняя &raquo;</a></li>
         {% endif %}
     </ul>
+    <form action="{% url 'get_studies' %}" method="GET">
+        {{ filter_obj.form.as_p }}
+        <button class="btn btn-primary" type="submit">Поиск</button>
+    </form>
     <table class="table">
         <thead>
             <tr>
@@ -41,7 +42,7 @@
             <td>{{ study.patient_fio }}</td>
             <td>{{ study.patient_birthdate|date:'d.m.Y' }}</td>
             <td>{{ study.study_uid }}</td>
-            <td>{{ study.study_date|date:'d.m.Y H:i' }}</td>
+            <td>{{ study.study_date|date:'d.m.Y   H:i' }}</td>
             <td>{{ study.study_modality.name }}</td>
             </tr>
         {% endfor %}
