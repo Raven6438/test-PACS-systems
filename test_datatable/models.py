@@ -6,6 +6,9 @@ class Modalities(models.Model):
     short_code = models.CharField(max_length=10, verbose_name='Короткий код')
     name = models.CharField(max_length=250, verbose_name='Наименование модальности')
 
+    def __str__(self):
+        return f'{self.short_code} - {self.name}'
+
 
 class Studies(models.Model):
     patient_fio = models.CharField(max_length=250, verbose_name='ФИО пациента')
