@@ -4,7 +4,7 @@ from django import views
 from django.shortcuts import render
 from django.views import generic
 
-from . import models
+from . import models, filters
 from .models import Modalities, Studies
 import names
 import random
@@ -65,3 +65,13 @@ class StudiesView(generic.ListView):
     context_object_name = 'studies'
     paginate_by = 50
 
+    def get_filter(self):
+        return filters.StudiesFilter(self.request.GET)
+
+    def get_queryset(self):
+        return self.get_filter().qs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["filter_obj"] = self.get_filter()
+        return context
